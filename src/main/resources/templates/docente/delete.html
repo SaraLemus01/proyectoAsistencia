@@ -1,0 +1,27 @@
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/layouts/_mainLayout" xmlns:th="http://www.thymeleaf.org">
+<div layout:fragment="content">
+    <h1>Eliminar docente</h1>
+    <h3>¿Está seguro que desea eliminar el registro?</h3>
+    <div>
+        <hr/>
+        <dl class="row">
+            <dt class="col-sm-2">ID</dt>
+            <dd class="col-sm-10" th:text="${docente.id}"></dd>
+            <dt class="col-sm-2">Nombre</dt>
+            <dd class="col-sm-10" th:text="${docente.nombre}"></dd>
+            <dt class="col-sm-2">Apellido</dt>
+            <dd class="col-sm-10" th:text="${docente.apellido}"></dd>
+            <dt class="col-sm-2">Email</dt>
+            <dd class="col-sm-10" th:text="${docente.email}"></dd>
+            <dt class="col-sm-2">Telefono</dt>
+            <dd class="col-sm-10" th:text="${docente.telefono}"></dd>
+        </dl>
+        <form th:action="@{/docentes/delete}" method="post">
+            <input type="hidden" name="Id" th:value="${docente.id}">
+            <input type="submit" value="Eliminar" class="btn btn-danger">
+            <a th:href="@{/docentes}" class="btn btn-secondary">Regresar</a>
+        </form>
+
+    </div>
+</div>
