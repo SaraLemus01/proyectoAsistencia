@@ -4,6 +4,11 @@ import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import java.util.HashSet;
+
 @Entity
 @Embeddable
 @Table(name = "grupos")
@@ -15,6 +20,8 @@ public class Grupo {
     private String nombre;
     @Nullable
     private String descripcion;
+    @ManyToMany(mappedBy = "grupos")
+    private Set<Docente> docentes = new HashSet<>();
 
     public Integer getId() {
         return id;

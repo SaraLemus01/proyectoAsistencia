@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/layouts/_mainLayout" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles de la Asignación Estudiante-Grupo</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div layout:fragment="content">
+    <h1>Detalles de la Asignación estudiante-Grupo</h1>
+    <dt class="col-sm-2">ID</dt>
+    <dd class="col-sm-10" th:text="${estudianteGrupo.id}"></dd>
+    <dt class="col-sm-2">Docente</dt>
+    <dd class="col-sm-10" th:text="${estudianteGrupo.estudiante.nombre} "></dd>
+    <dt class="col-sm-2">Grupo</dt>
+    <dd class="col-sm-10" th:text="${estudianteGrupo.grupo.nombre}"></dd>
+    <hr>
+    <a th:href="@{/estudianteGrupo/edit/{id}(id=${estudianteGrupo.id})}" class="btn btn-info">Editar</a>
+    <a th:href="@{/estudianteGrupo}" class="btn btn-secondary">Regresar</a>
+</div>
+</body>
+</html>

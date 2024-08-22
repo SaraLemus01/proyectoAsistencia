@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/layouts/_mainLayout"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eliminar Asignación Estudiante-Grupo</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div layout:fragment="content">
+    <h1>Eliminar Asignación Estudiante-Grupo</h1>
+    <h3>¿Está seguro que desea eliminar el registro?</h3>
+    <div>
+        <hr/>
+        <dl class="row">
+            <dt class="col-sm-2">ID</dt>
+            <dd class="col-sm-10" th:text="${estudianteGrupo.id}"></dd>
+            <dt class="col-sm-2">Docente</dt>
+            <dd class="col-sm-10" th:text="${estudianteGrupo.estudiante.nombre} "></dd>
+            <dt class="col-sm-2">Grupo</dt>
+            <dd class="col-sm-10" th:text="${estudianteGrupo.grupo.nombre}"></dd>
+
+        </dl>
+        <form th:action="@{/estudianteGrupo/delete}" method="post">
+            <input type="hidden" name="id" th:value="${estudianteGrupo.id}">
+            <button type="submit" class="btn btn-danger">Eliminar</button>
+            <a th:href="@{/estudianteGrupo}" class="btn btn-secondary">Regresar</a>
+        </form>
+    </div>
+</div>
+</body>
+</html>

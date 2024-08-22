@@ -71,16 +71,16 @@ public class GrupoController {
         model.addAttribute("grupo", grupo);
         return "grupo/edit";
     }
-    @GetMapping("/remove/{id}")
+    @GetMapping("remove/{id}")
     public String remove(@PathVariable("id") Integer id, Model model){
         Grupo grupo = grupoServices.BuscarPorId(id).get();
-        model.addAttribute("grupo", grupo);
+        model.addAttribute("grupo",grupo);
         return "grupo/delete";
     }
     @PostMapping("/delete")
-    public String delete(Grupo grupo, RedirectAttributes attributes){
-       grupoServices.EliminarPorId(grupo.getId());
-       attributes.addFlashAttribute("msg","Grupo eliminado correctamente");
-       return "redirect:/grupos";
+    public String delete(Grupo grupo,RedirectAttributes attributes){
+        grupoServices.EliminarPorId((grupo.getId()));
+        attributes.addFlashAttribute("msg","Grupo Eliminado correctamente");
+        return "redirect:/grupos";
     }
 }
