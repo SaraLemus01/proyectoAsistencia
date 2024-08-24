@@ -87,10 +87,8 @@ public class DocenteController {
     }
     @GetMapping("/exportarPDF")
     public void exportarDocentes(HttpServletResponse response) throws IOException {
-        // Establece el tipo de contenido de la respuesta como "application/pdf"
         response.setContentType("application/pdf");
 
-        // Crea un objeto SimpleDateFormat para formatear la fecha actual en un formato específico
         DateFormat dateFormattter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
 
         String fechaActual = dateFormattter.format(new Date());
@@ -99,11 +97,8 @@ public class DocenteController {
         String valor = "inline; filename=Docentes_" + fechaActual + ".pdf";
         response.setHeader(cabecera, valor);
 
-        // Obtiene una lista de todos los docentes desde el servicio de docentes
         List<Docente> docentes = docenteServices.ObtenerTodos();
-        // Crea una instancia de la clase DocenteExportPDF, pasando la lista de docentes como parámetro
         DocenteExportPDF exporter = new DocenteExportPDF(docentes);
-        // Llama al método Exportar para generar el PDF y enviarlo en la respuesta HTTP
         exporter.Exportar(response);
     }
 

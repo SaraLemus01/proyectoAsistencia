@@ -1,6 +1,6 @@
 package Utilidades;
 
-import com.ESFE.Asistencias.Entidades.Docente;
+import com.ESFE.Asistencias.Entidades.Estudiante;
 import com.lowagie.text.*;
 import com.lowagie.text.Document;
 import com.lowagie.text.Font;
@@ -19,13 +19,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
-public class DocenteExportPDF {
-    // Lista de docentes que se va a exportar en el PDF
-    private List<Docente> listaDocentes;
+public class EstudianteExportPDF {
+    private List<Estudiante> listaEstudiantes;
 
 
-    public DocenteExportPDF(List<Docente> listaDocentes){
-        this.listaDocentes = listaDocentes;
+    public EstudianteExportPDF(List<Estudiante> listaEstudiantes){
+        this.listaEstudiantes = listaEstudiantes;
     }
 
 
@@ -43,20 +42,20 @@ public class DocenteExportPDF {
         tabla.addCell(celda);
         celda.setPhrase(new Phrase("Nombre",fuente));
         tabla.addCell(celda);
-        celda.setPhrase(new Phrase("Apellido",fuente));
-        tabla.addCell(celda);
         celda.setPhrase(new Phrase("Email",fuente));
+        tabla.addCell(celda);
+        celda.setPhrase(new Phrase("Pin",fuente));
         tabla.addCell(celda);
 
 
     }
 
     private  void SetDatosTabla(PdfPTable tabla){
-        for(Docente docente: listaDocentes){
-            tabla.addCell(String.valueOf(docente.getId()));
-            tabla.addCell(docente.getNombre());
-            tabla.addCell(docente.getApellido());
-            tabla.addCell(docente.getEmail());
+        for(Estudiante estudiante: listaEstudiantes){
+            tabla.addCell(String.valueOf(estudiante.getId()));
+            tabla.addCell(estudiante.getNombre());
+            tabla.addCell(estudiante.getEmail());
+            tabla.addCell(estudiante.getPin());
         }
     }
 
@@ -69,7 +68,6 @@ public class DocenteExportPDF {
         documento.open();
 
         try {
-            // Cargar la imagen desde los recursos
             InputStream inputStream = getClass().getResourceAsStream("/static/dist/img/logo.png");
             if (inputStream != null) {
                 com.lowagie.text.Image imagen = com.lowagie.text.Image.getInstance(ImageIO.read(inputStream), null);
@@ -84,15 +82,13 @@ public class DocenteExportPDF {
         }
 
         documento.add(new com.lowagie.text.Paragraph(" "));
-        documento.add(new Paragraph(" "));
+        documento.add(new com.lowagie.text.Paragraph(" "));
 
-        // Fuente para el título del documento
         Font fuente = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
         fuente.setColor(Color.BLACK);
         fuente.setSize(18);
 
-
-        Paragraph titulo = new Paragraph("Lista Docentes",fuente);
+        Paragraph titulo = new Paragraph("Lista Estudiante",fuente);
         titulo.setAlignment(Paragraph.ALIGN_CENTER);
         documento.add(titulo);
 
@@ -105,11 +101,9 @@ public class DocenteExportPDF {
         setCabeceraTabla(tabla);
         SetDatosTabla(tabla);
 
-        // Añadir la tabla al documento
+
         documento.add(tabla);
-        // Cerrar el documento
+
         documento.close();
     }
 }
-
-

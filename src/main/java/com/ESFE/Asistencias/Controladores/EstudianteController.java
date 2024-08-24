@@ -1,10 +1,11 @@
 package com.ESFE.Asistencias.Controladores;
 
+import Utilidades.DocenteExportPDF;
+import Utilidades.EstudianteExportPDF;
 import com.ESFE.Asistencias.Entidades.Estudiante;
-import com.ESFE.Asistencias.Servicios.Interfaces.IDocenteGrupoService;
-import com.ESFE.Asistencias.Servicios.Interfaces.IDocenteServices;
 import com.ESFE.Asistencias.Servicios.Interfaces.IEstudianteServices;
 import com.ESFE.Asistencias.Servicios.Interfaces.IGrupoServices;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -15,6 +16,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -112,6 +117,22 @@ public class EstudianteController {
         }
         return "redirect:/estudiantes";
     }
+    @GetMapping("/exportarPDF")
+    public void exportarEstudiantes(HttpServletResponse response) throws IOException {
+        response.setContentType("application/pdf");
+
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+        String fechaActual = dateFormatter.format(new Date());
+
+        String cabecera = "Content-Disposition";
+        String valor = "inline; filename=Estudiante_" + fechaActual + ".pdf";
+        response.setHeader(cabecera, valor);
+
+        List<Estudiante> estudiantes = estudianteServices.ObtenerTodos();
+        EstudianteExportPDF exporter = new EstudianteExportPDF(estudiantes);
+        exporter.Exportar(response);
+    }
+
 }
 
 
