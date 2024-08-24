@@ -1,8 +1,10 @@
 package com.ESFE.Asistencias.Controladores;
 
+import Utilidades.DocenteExportPDF;
 import com.ESFE.Asistencias.Entidades.Docente;
 import com.ESFE.Asistencias.Entidades.Grupo;
 import com.ESFE.Asistencias.Servicios.Interfaces.IDocenteServices;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -13,6 +15,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -79,4 +85,26 @@ public class DocenteController {
         attributes.addFlashAttribute("msg","Docente eliminado correctamente");
         return "redirect:/docentes";
     }
+    @GetMapping("/exportarPDF")
+    public void exportarDocentes(HttpServletResponse response) throws IOException {
+        // Establece el tipo de contenido de la respuesta como "application/pdf"
+        response.setContentType("application/pdf");
+
+        // Crea un objeto SimpleDateFormat para formatear la fecha actual en un formato específico
+        DateFormat dateFormattter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+
+        String fechaActual = dateFormattter.format(new Date());
+
+        String cabecera = "Content-Disposition";
+        String valor = "inline; filename=Docentes_" + fechaActual + ".pdf";
+        response.setHeader(cabecera, valor);
+
+        // Obtiene una lista de todos los docentes desde el servicio de docentes
+        List<Docente> docentes = docenteServices.ObtenerTodos();
+        // Crea una instancia de la clase DocenteExportPDF, pasando la lista de docentes como parámetro
+        DocenteExportPDF exporter = new DocenteExportPDF(docentes);
+        // Llama al método Exportar para generar el PDF y enviarlo en la respuesta HTTP
+        exporter.Exportar(response);
+    }
+
 }

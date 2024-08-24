@@ -194,49 +194,72 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </div>
             </div>
 
-            <!-- Sidebar Menu -->
             <nav class="mt-2">
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                    <!-- Add icons to the links using the .nav-icon class
-                         with font-awesome or any other icon font library -->
-                    <li class="nav-item menu-open">
-                        <a href="#" class="nav-link active">
-                            <i class="nav-icon fas fa-tachometer-alt"></i>
+
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-book"></i>
                             <p>
-                                Starter Pages
+                                Catalogos
                                 <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="#" class="nav-link active">
+                                <a th:href="@{/grupos}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Active Page</p>
+                                    <p>Grupos</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="#" class="nav-link">
+                                <a th:href="@{/docentes}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Inactive Page</p>
+                                    <p>Docentes</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a th:href="@{/docenteGrupo}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Asignacion Docente</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a th:href="@{/estudianteGrupo}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Asignacion Estudiante</p>
                                 </a>
                             </li>
                         </ul>
                     </li>
                     <li class="nav-item">
                         <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-th"></i>
+                            <i class="nav-icon fas fa-chart-bar"></i>
                             <p>
-                                Simple Link
-                                <span class="right badge badge-danger">New</span>
+                                Reportes
+                                <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a th:href="@{/docentes/exportarPDF}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Reporte Docentes</p>
+                                </a>
+                            </li>
+                        </ul>
                     </li>
+
                     <li class="nav-item">
-                        <a th:href="@{/logout}" class="nav-link">
-                            <i class="nav-icon fas fa-sign-out-alt"></i>
-                            <p>Cerrar Sesion</p>
-                        </a>
+                        <div sec:authorize="isAuthenticated()">
+                            <a th:href="@{/logout}" class="nav-link">
+                                <i class="nav-icon fas fa-sign-out-alt"></i>
+                                <p>Cerrar Sesión</p>
+                            </a>
+                        </div>
+
                     </li>
+
                 </ul>
             </nav>
             <!-- /.sidebar-menu -->
